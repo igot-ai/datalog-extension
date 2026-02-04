@@ -1,17 +1,17 @@
 #!/usr/bin/env node
 /**
- * MCP server for Datalog Studio integration
+ * MCP server for Catalog integration
  */
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { CallToolRequestSchema, ListToolsRequestSchema } from '@modelcontextprotocol/sdk/types.js';
-import { DatalogClient } from './datalogClient.js';
-class DatalogServer {
+import { DataStudioClient } from './datalogClient.js';
+class DataStudioServer {
     constructor() {
         const apiKey = process.env.DATALOG_API_KEY || '';
-        this.datalogClient = new DatalogClient(apiKey);
+        this.dataClient = new DataStudioClient(apiKey);
         this.server = new Server({
-            name: 'datalog-studio-server',
+            name: 'catalog-server',
             version: '1.0.0',
         }, {
             capabilities: {
@@ -27,7 +27,7 @@ class DatalogServer {
                 tools: [
                     {
                         name: 'list_catalogs',
-                        description: 'List all available data catalogs in Datalog Studio',
+                        description: 'List all available data catalogs',
                         inputSchema: {
                             type: 'object',
                             properties: {},
@@ -130,31 +130,31 @@ class DatalogServer {
             try {
                 switch (name) {
                     case 'list_catalogs': {
-                        const catalogs = await this.datalogClient.listCatalogs();
+                        const catalogs = await this.dataClient.listCatalogs();
                         return {
                             content: [{ type: 'text', text: JSON.stringify(catalogs, null, 2) }],
                         };
                     }
                     case 'list_collections': {
-                        const collections = await this.datalogClient.listCollections(args?.catalog_id);
+                        const collections = await this.dataClient.listCollections(args?.catalog_id);
                         return {
                             content: [{ type: 'text', text: JSON.stringify(collections, null, 2) }],
                         };
                     }
                     case 'list_attributes': {
-                        const attributes = await this.datalogClient.listAttributes(args?.catalog_name, args?.collection_name);
+                        const attributes = await this.dataClient.listAttributes(args?.catalog_name, args?.collection_name);
                         return {
                             content: [{ type: 'text', text: JSON.stringify(attributes, null, 2) }],
                         };
                     }
                     case 'list_data_assets': {
-                        const assets = await this.datalogClient.listDataAssets(args?.catalog_name, args?.collection_name);
+                        const assets = await this.dataClient.listDataAssets(args?.catalog_name, args?.collection_name);
                         return {
                             content: [{ type: 'text', text: JSON.stringify(assets, null, 2) }],
                         };
                     }
                     case 'ingest_data': {
-                        const result = await this.datalogClient.ingestData(args?.catalog_name, args?.collection_name, args?.text, args?.transform);
+                        const result = await this.dataClient.ingestData(args?.catalog_name, args?.collection_name, args?.text, args?.transform);
                         return {
                             content: [{ type: 'text', text: `Ingestion successful: ${JSON.stringify(result)}` }],
                         };
@@ -188,10 +188,10 @@ class DatalogServer {
     async run() {
         const transport = new StdioServerTransport();
         await this.server.connect(transport);
-        console.error('Datalog Studio MCP server running on stdio');
+        console.error('Catalog MCP server running on stdio');
     }
 }
-const server = new DatalogServer();
+const server = new DataStudioServer();
 server.run().catch((error) => {
     console.error('Failed to start server:', error);
     process.exit(1);

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import FormData from 'form-data';
 import * as fs from 'fs';
-export class DatalogClient {
+export class DataStudioClient {
     constructor(apiKey, baseUrl = 'https://studio.igot.ai/v1/catalog') {
         this.client = axios.create({
             baseURL: baseUrl,

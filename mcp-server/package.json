@@ -1,8 +1,8 @@
 {
-    "name": "datalog-mcp-server",
+    "name": "catalog-mcp-server",
     "version": "1.0.0",
     "type": "module",
-    "description": "MCP server for Datalog Studio integration",
+    "description": "MCP server for Catalog integration",
     "main": "dist/index.js",
     "scripts": {
         "build": "tsc",

@@ -1,5 +1,5 @@
 import { Project, Table, Column, Asset } from './types.js';
-export declare class DatalogClient {
+export declare class DataStudioClient {
     private client;
     constructor(apiKey: string, baseUrl?: string);
     listCatalogs(): Promise<Project[]>;

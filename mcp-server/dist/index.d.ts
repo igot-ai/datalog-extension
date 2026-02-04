@@ -1,5 +1,5 @@
 #!/usr/bin/env node
 /**
- * MCP server for Datalog Studio integration
+ * MCP server for Catalog integration
  */
 export {};

@@ -3,7 +3,7 @@ import FormData from 'form-data';
 import * as fs from 'fs';
 import { Project, Table, Column, Asset } from './types.js';
 
-export class DatalogClient {
+export class DataStudioClient {
   private client: AxiosInstance;
 
   constructor(apiKey: string, baseUrl: string = 'https://studio.igot.ai/v1/catalog') {

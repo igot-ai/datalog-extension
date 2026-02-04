@@ -1,13 +1,13 @@
-# Datalog Studio MCP Extension
+# Catalog MCP Extension
 
-Professional MCP server for integrating Datalog Studio tasks into the Gemini CLI. Manage projects, tables, and assets using natural language.
+Professional MCP server for integrating Catalog tasks into the Gemini CLI. Manage data catalogs, collections, and master data using natural language.
 
 ## Features
 
-- **Project Discovery**: List and find projects within your Datalog workspace.
-- **Schema Management**: Explore collections, columns, and AI prompt templates.
-- **Asset Control**: List uploaded documents and analyze data structures.
-- **Data Ingestion**: Direct plain text upload with optional AI transformation.
+- **Catalog Discovery**: List and find data catalogs within your workspace.
+- **Master Data Management**: Explore collections, attributes, and AI prompt templates.
+- **Data Asset Control**: List uploaded documents and analyze data structures.
+- **Data Ingestion**: Direct data ingestion with automated AI transformation.
 
 ## Quick Start
 
@@ -41,8 +41,9 @@ Use the provided scripts for a professional development workflow:
 
 ## Tools Summary
 
-- `list_projects()`: List all accessible projects.
-- `list_tables(project_id)`: List collections in a specific project.
-- `list_columns(project_name, collection_name)`: View table schema.
-- `list_assets(project_name, collection_name)`: List uploaded files.
-- `upload_text(project_name, collection_name, text, transform?)`: Ingest data.
+- `list_catalogs()`: List all accessible data catalogs.
+- `list_collections(catalog_id)`: List collections in a specific catalog.
+- `list_attributes(catalog_name, collection_name)`: View collection schema and attributes.
+- `list_data_assets(catalog_name, collection_name)`: List uploaded files within a collection.
+- `ingest_data(catalog_name, collection_name, text, transform?)`: Ingest master data into a collection.
+
