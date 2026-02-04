@@ -13,39 +13,39 @@ export class DatalogClient {
             },
         });
     }
-    async listProjects() {
+    async listCatalogs() {
         const response = await this.client.get('/projects', {
             params: { limit: 100 },
         });
         return response.data;
     }
-    async listTables(projectId) {
-        const response = await this.client.get(`/projects/${projectId}/tables`, {
+    async listCollections(catalogId) {
+        const response = await this.client.get(`/projects/${catalogId}/tables`, {
             params: { limit: 200 },
         });
         return response.data;
     }
-    async listColumns(projectName, collectionName) {
-        const response = await this.client.get(`/columns/${projectName}/${collectionName}`);
+    async listAttributes(catalogName, collectionName) {
+        const response = await this.client.get(`/columns/${catalogName}/${collectionName}`);
         return response.data;
     }
-    async listAssets(projectName, collectionName) {
-        const response = await this.client.get(`/assets/${projectName}/${collectionName}`);
+    async listDataAssets(catalogName, collectionName) {
+        const response = await this.client.get(`/assets/${catalogName}/${collectionName}`);
         return response.data;
     }
-    async uploadFile(projectName, collectionName, filePath, transform = true) {
+    async uploadFile(catalogName, collectionName, filePath, transform = true) {
         const form = new FormData();
         form.append('upload_files', fs.createReadStream(filePath));
-        const response = await this.client.post(`/upload/${projectName}/${collectionName}`, form, {
+        const response = await this.client.post(`/upload/${catalogName}/${collectionName}`, form, {
             params: { transform },
             headers: { ...form.getHeaders() },
         });
         return response.data;
     }
-    async uploadPlainText(projectName, collectionName, text, transform = true) {
+    async ingestData(catalogName, collectionName, text, transform = true) {
         const form = new FormData();
         form.append('plain_text', text);
-        const response = await this.client.post(`/upload/${projectName}/${collectionName}`, form, {
+        const response = await this.client.post(`/upload/${catalogName}/${collectionName}`, form, {
             params: { transform },
             headers: { ...form.getHeaders() },
         });

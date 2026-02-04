@@ -1,7 +1,7 @@
 {
   "name": "datalog-studio",
   "version": "1.0.0",
-  "description": "Datalog Studio Integration - Manage projects, tables, and assets through MCP",
+  "description": "Datalog Studio Integration - Manage data catalogs, collections, and master data through MCP",
   "settings": [
     {
       "name": "Datalog Studio API Key",
@@ -13,7 +13,9 @@
   "mcpServers": {
     "datalog": {
       "command": "node",
-      "args": ["${extensionPath}/mcp-server/dist/index.js"],
+      "args": [
+        "${extensionPath}/mcp-server/dist/index.js"
+      ],
       "env": {}
     }
   },

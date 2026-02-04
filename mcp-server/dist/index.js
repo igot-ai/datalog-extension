@@ -26,88 +26,88 @@ class DatalogServer {
             return {
                 tools: [
                     {
-                        name: 'list_projects',
-                        description: 'List all projects in Datalog Studio',
+                        name: 'list_catalogs',
+                        description: 'List all available data catalogs in Datalog Studio',
                         inputSchema: {
                             type: 'object',
                             properties: {},
                         },
                     },
                     {
-                        name: 'list_tables',
-                        description: 'List all tables (collections) in a specific project',
+                        name: 'list_collections',
+                        description: 'List all collections (master data tables) within a specific catalog',
                         inputSchema: {
                             type: 'object',
                             properties: {
-                                project_id: {
+                                catalog_id: {
                                     type: 'string',
-                                    description: 'The UUID of the project',
+                                    description: 'The UUID of the catalog (project)',
                                 },
                             },
-                            required: ['project_id'],
+                            required: ['catalog_id'],
                         },
                     },
                     {
-                        name: 'list_columns',
-                        description: 'List columns and schema for a specific table',
+                        name: 'list_attributes',
+                        description: 'List attributes and schema for a specific collection',
                         inputSchema: {
                             type: 'object',
                             properties: {
-                                project_name: {
+                                catalog_name: {
                                     type: 'string',
-                                    description: 'Name of the project',
+                                    description: 'Name of the catalog',
                                 },
                                 collection_name: {
                                     type: 'string',
-                                    description: 'Name of the collection/table',
+                                    description: 'Name of the collection',
                                 },
                             },
-                            required: ['project_name', 'collection_name'],
+                            required: ['catalog_name', 'collection_name'],
                         },
                     },
                     {
-                        name: 'list_assets',
-                        description: 'List all assets (uploaded files) in a specific table',
+                        name: 'list_data_assets',
+                        description: 'List all data assets (uploaded files) in a specific collection',
                         inputSchema: {
                             type: 'object',
                             properties: {
-                                project_name: {
+                                catalog_name: {
                                     type: 'string',
-                                    description: 'Name of the project',
+                                    description: 'Name of the catalog',
                                 },
                                 collection_name: {
                                     type: 'string',
-                                    description: 'Name of the collection/table',
+                                    description: 'Name of the collection',
                                 },
                             },
-                            required: ['project_name', 'collection_name'],
+                            required: ['catalog_name', 'collection_name'],
                         },
                     },
                     {
-                        name: 'upload_text',
-                        description: 'Upload plain text content to a Datalog table',
+                        name: 'ingest_data',
+                        description: 'Ingest plain text data into a catalog collection for master data processing',
                         inputSchema: {
                             type: 'object',
                             properties: {
-                                project_name: {
+                                catalog_name: {
                                     type: 'string',
-                                    description: 'Name of the project',
+                                    description: 'Name of the catalog',
                                 },
                                 collection_name: {
                                     type: 'string',
-                                    description: 'Name of the collection/table',
+                                    description: 'Name of the collection',
                                 },
                                 text: {
                                     type: 'string',
-                                    description: 'Content to upload',
+                                    description: 'Content to ingest',
                                 },
                                 transform: {
                                     type: 'boolean',
-                                    description: 'Whether to trigger transformation immediately (default: true)',
+                                    description: 'Whether to trigger AI transformation immediately (default: true)',
                                     default: true,
                                 },
                             },
-                            required: ['project_name', 'collection_name', 'text'],
+                            required: ['catalog_name', 'collection_name', 'text'],
                         },
                     },
                 ],
@@ -129,34 +129,34 @@ class DatalogServer {
             }
             try {
                 switch (name) {
-                    case 'list_projects': {
-                        const projects = await this.datalogClient.listProjects();
+                    case 'list_catalogs': {
+                        const catalogs = await this.datalogClient.listCatalogs();
                         return {
-                            content: [{ type: 'text', text: JSON.stringify(projects, null, 2) }],
+                            content: [{ type: 'text', text: JSON.stringify(catalogs, null, 2) }],
                         };
                     }
-                    case 'list_tables': {
-                        const tables = await this.datalogClient.listTables(args?.project_id);
+                    case 'list_collections': {
+                        const collections = await this.datalogClient.listCollections(args?.catalog_id);
                         return {
-                            content: [{ type: 'text', text: JSON.stringify(tables, null, 2) }],
+                            content: [{ type: 'text', text: JSON.stringify(collections, null, 2) }],
                         };
                     }
-                    case 'list_columns': {
-                        const columns = await this.datalogClient.listColumns(args?.project_name, args?.collection_name);
+                    case 'list_attributes': {
+                        const attributes = await this.datalogClient.listAttributes(args?.catalog_name, args?.collection_name);
                         return {
-                            content: [{ type: 'text', text: JSON.stringify(columns, null, 2) }],
+                            content: [{ type: 'text', text: JSON.stringify(attributes, null, 2) }],
                         };
                     }
-                    case 'list_assets': {
-                        const assets = await this.datalogClient.listAssets(args?.project_name, args?.collection_name);
+                    case 'list_data_assets': {
+                        const assets = await this.datalogClient.listDataAssets(args?.catalog_name, args?.collection_name);
                         return {
                             content: [{ type: 'text', text: JSON.stringify(assets, null, 2) }],
                         };
                     }
-                    case 'upload_text': {
-                        const result = await this.datalogClient.uploadPlainText(args?.project_name, args?.collection_name, args?.text, args?.transform);
+                    case 'ingest_data': {
+                        const result = await this.datalogClient.ingestData(args?.catalog_name, args?.collection_name, args?.text, args?.transform);
                         return {
-                            content: [{ type: 'text', text: `Upload successful: ${JSON.stringify(result)}` }],
+                            content: [{ type: 'text', text: `Ingestion successful: ${JSON.stringify(result)}` }],
                         };
                     }
                     default:

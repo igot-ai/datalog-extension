@@ -18,32 +18,32 @@ export class DatalogClient {
     });
   }
 
-  async listProjects(): Promise<Project[]> {
+  async listCatalogs(): Promise<Project[]> {
     const response = await this.client.get('/projects', {
       params: { limit: 100 },
     });
     return response.data;
   }
 
-  async listTables(projectId: string): Promise<Table[]> {
-    const response = await this.client.get(`/projects/${projectId}/tables`, {
+  async listCollections(catalogId: string): Promise<Table[]> {
+    const response = await this.client.get(`/projects/${catalogId}/tables`, {
       params: { limit: 200 },
     });
     return response.data;
   }
 
-  async listColumns(projectName: string, collectionName: string): Promise<Column[]> {
-    const response = await this.client.get(`/columns/${projectName}/${collectionName}`);
+  async listAttributes(catalogName: string, collectionName: string): Promise<Column[]> {
+    const response = await this.client.get(`/columns/${catalogName}/${collectionName}`);
     return response.data;
   }
 
-  async listAssets(projectName: string, collectionName: string): Promise<Asset[]> {
-    const response = await this.client.get(`/assets/${projectName}/${collectionName}`);
+  async listDataAssets(catalogName: string, collectionName: string): Promise<Asset[]> {
+    const response = await this.client.get(`/assets/${catalogName}/${collectionName}`);
     return response.data;
   }
 
   async uploadFile(
-    projectName: string,
+    catalogName: string,
     collectionName: string,
     filePath: string,
     transform: boolean = true,
@@ -51,15 +51,15 @@ export class DatalogClient {
     const form = new FormData();
     form.append('upload_files', fs.createReadStream(filePath));
 
-    const response = await this.client.post(`/upload/${projectName}/${collectionName}`, form, {
+    const response = await this.client.post(`/upload/${catalogName}/${collectionName}`, form, {
       params: { transform },
       headers: { ...form.getHeaders() },
     });
     return response.data;
   }
 
-  async uploadPlainText(
-    projectName: string,
+  async ingestData(
+    catalogName: string,
     collectionName: string,
     text: string,
     transform: boolean = true,
@@ -67,7 +67,7 @@ export class DatalogClient {
     const form = new FormData();
     form.append('plain_text', text);
 
-    const response = await this.client.post(`/upload/${projectName}/${collectionName}`, form, {
+    const response = await this.client.post(`/upload/${catalogName}/${collectionName}`, form, {
       params: { transform },
       headers: { ...form.getHeaders() },
     });
