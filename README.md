@@ -13,15 +13,15 @@ Professional MCP server for integrating Datalog Studio tasks into the Gemini CLI
 
 ### 1. Prerequisites
 
-- [Bun](https://bun.sh) runtime installed.
+- [Node.js](https://nodejs.org) (v18+) and npm installed.
 
 ### 2. Installation
 
 Install the extension and its dependencies:
 
 ```bash
-bun run install-deps
-bun run build
+npm run install-deps
+npm run build
 gemini extensions install .
 ```
 
@@ -33,11 +33,11 @@ The extension requires a `DATALOG_API_KEY`. You will be prompted for this during
 
 Use the provided scripts for a professional development workflow:
 
-- `bun run dev`: Start MCP server in watch mode.
-- `bun run lint`: Run ESLint to find and fix issues.
-- `bun run format`: Format code with Prettier.
-- `bun run typecheck`: Run TypeScript type checking.
-- `bun run preflight`: Run a full cleanup, install, lint, and build cycle.
+- `npm run dev`: Start MCP server in watch mode.
+- `npm run lint`: Run ESLint to find and fix issues.
+- `npm run format`: Format code with Prettier.
+- `npm run typecheck`: Run TypeScript type checking.
+- `npm run preflight`: Run a full cleanup, install, lint, and build cycle.
 
 ## Tools Summary
 

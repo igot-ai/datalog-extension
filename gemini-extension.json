@@ -12,8 +12,8 @@
   ],
   "mcpServers": {
     "datalog": {
-      "command": "bun",
-      "args": ["run", "${extensionPath}/mcp-server/dist/index.js"],
+      "command": "node",
+      "args": ["${extensionPath}/mcp-server/dist/index.js"],
       "env": {}
     }
   },
