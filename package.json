@@ -1,0 +1,19 @@
+{
+    "name": "datalog-studio",
+    "version": "1.0.0",
+    "type": "module",
+    "description": "Datalog Studio Integration Extension",
+    "scripts": {
+        "build": "cd mcp-server && npm run build",
+        "install-deps": "cd mcp-server && npm install",
+        "dev": "cd mcp-server && npm run dev",
+        "postinstall": "npm run install-deps && npm run build"
+    },
+    "engines": {
+        "node": ">=18.0.0"
+    },
+    "devDependencies": {
+        "@types/node": "^22.0.0",
+        "typescript": "^5.0.0"
+    }
+}
