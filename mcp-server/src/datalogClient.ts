@@ -18,9 +18,9 @@ export class DatalogClient {
         });
     }
 
-    async listProjects(workspaceId: string = 'default'): Promise<Project[]> {
+    async listProjects(): Promise<Project[]> {
         const response = await this.client.get('/projects', {
-            params: { workspace_id: workspaceId, limit: 100 }
+            params: { limit: 100 }
         });
         return response.data;
     }

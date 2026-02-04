@@ -48,13 +48,7 @@ class DatalogServer {
                         description: 'List all projects in Datalog Studio',
                         inputSchema: {
                             type: 'object',
-                            properties: {
-                                workspace_id: {
-                                    type: 'string',
-                                    description: 'Workspace ID (default: "default")',
-                                    default: 'default',
-                                },
-                            },
+                            properties: {},
                         },
                     },
                     {
@@ -144,7 +138,7 @@ class DatalogServer {
             try {
                 switch (name) {
                     case 'list_projects': {
-                        const projects = await this.datalogClient.listProjects(args?.workspace_id as string);
+                        const projects = await this.datalogClient.listProjects();
                         return {
                             content: [{ type: 'text', text: JSON.stringify(projects, null, 2) }],
                         };

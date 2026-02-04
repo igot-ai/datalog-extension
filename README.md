@@ -44,7 +44,7 @@ Add the following to your MCP configuration (e.g., `~/.config/gemini-cli/mcp.jso
 
 ## Tools
 
-- `list_projects(workspace_id?)`
+- `list_projects()`
 - `list_tables(project_id)`
 - `list_columns(project_name, collection_name)`
 - `list_assets(project_name, collection_name)`
